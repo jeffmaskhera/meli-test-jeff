@@ -1,6 +1,8 @@
 
 JEFREY SANCHEZ TEST MELI
 
+node v14.17.0
+
 
 In the project directory, for build you can run:
 
