@@ -1,0 +1,17 @@
+.bread-crumb {
+  margin: auto;
+  max-width: $tablet-xl;
+  padding: 5px 30px;
+  width: 100%;
+  &__container {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-start;
+    &__item {
+      font-size: 18px;
+      text-transform: capitalize;
+    }
+  }
+}
