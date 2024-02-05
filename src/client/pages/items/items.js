@@ -3,6 +3,7 @@ import Filter from "../../component/filter/filter";
 import SearchResult from "../../component/search-result/searchResult";
 import BreadCrumb from "../../component/bread-crumb/breadCrumb";
 import {formatProductData} from "../../../actions/products/interface-products";
+import {Routes} from "../../../routes/interface-routes";
 
 const Items = ({response}) => {
 
@@ -28,7 +29,7 @@ const Items = ({response}) => {
     }
 
     const selectorIdProduct =(value)=> {
-        window.location.href = (`/detail/${value}`)
+        window.location.href = (`${[Routes.DETAIL]}${value}`)
     }
 
     useEffect(()=> {

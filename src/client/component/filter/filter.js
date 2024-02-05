@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {Routes} from "../../../routes/interface-routes";
 
 
 const Filter=()=> {
@@ -21,11 +22,11 @@ const Filter=()=> {
     }
 
     const searching =()=> {
-        window.location.href = (`/items?search=${input}`)
+        window.location.href = (`${[Routes.ITEMS]}?search=${input}`)
     }
 
     const redirectHome =()=> {
-        window.location.href = (`/`)
+        window.location.href = ([Routes.HOME])
     }
 
     return (

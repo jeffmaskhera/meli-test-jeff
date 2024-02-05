@@ -1,11 +1,13 @@
 import React from 'react';
-import ReactDom from 'react-dom';
+import ReactDom from 'react-dom/client';
+
 import './assets/styles/global.scss'
 import Home from './pages/home/home'
 import Items from "./pages/items/items";
 import Detail from "./pages/detail/detail";
 import {switchCases} from "../utils/helpers";
 import NotFound from "./pages/not-found/notFound";
+import {Routes} from "../routes/interface-routes";
 
 
 const linkElement = document.createElement('link');
@@ -30,17 +32,8 @@ fontAwesomeLink.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15
 document.head.appendChild(fontAwesomeLink);
 
 
-
-const Routes = {
-    HOME: '/',
-    ITEMS: '/items',
-    DETAIL: '/detail/',
-};
-
-
 const currentRoute = window.location.pathname
 let detailId = null;
-
 
 if (currentRoute.startsWith([Routes.DETAIL])) {
     detailId = currentRoute.split('/').pop();
@@ -53,4 +46,5 @@ const componentToRender = switchCases(currentRoute, {
     'default': <NotFound/> // Página no encontrada
 });
 
-ReactDom.hydrate(componentToRender, document.getElementById('root'));
+
+ReactDom.hydrateRoot(document.getElementById('root'), componentToRender);
