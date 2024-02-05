@@ -39,7 +39,6 @@ const Routes = {
 
 
 const currentRoute = window.location.pathname
-const searchParam = new URLSearchParams(window.location.search).get('search');
 let detailId = null;
 
 
@@ -49,8 +48,8 @@ if (currentRoute.startsWith([Routes.DETAIL])) {
 
 const componentToRender = switchCases(currentRoute, {
     [Routes.HOME]: <Home items={window.__data__} />,
-    [Routes.ITEMS]: <Items params={searchParam}/>,
-    [Routes.DETAIL + detailId]: <Detail detailId={detailId}/>,
+    [Routes.ITEMS]: <Items response={window.__data__}/>,
+    [Routes.DETAIL + detailId]: <Detail response={window.__data__}/>,
     'default': <NotFound/> // Página no encontrada
 });
 

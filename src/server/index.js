@@ -10,7 +10,6 @@ import {searchItems, searchProduct} from "../actions/products/products";
 import NotFound from "../client/pages/not-found/notFound";
 
 
-
 const app = express();
 var queryParams = ''
 
@@ -18,94 +17,15 @@ var queryParams = ''
 
 app.use('/static', express.static(path.join(__dirname, '..', '..', 'dist', 'static')));
 
-// Endpoint Find Items
-app.get('/api/items', async (req, res) => {
-    try {
-        const { query } = req.query;
-        const searchResults = await searchItems(query);
-        queryParams = query
-
-        const formattedResponse = {
-            author: {
-                name: 'Jefrey',
-                lastname: 'Sánchez'
-            },
-            items: searchResults.map(item => ({
-                id: item?.id,
-                query: query,
-                title: item?.title,
-                picture: item?.thumbnail,
-                price: {
-                    currency: item?.currency_id,
-                    amount: item?.price,
-                    decimals: getDecimalCount(item?.price)
-                },
-                condition: item?.condition,
-                free_shipping: item?.shipping && item?.shipping?.free_shipping,
-                sellerName: item?.seller && item?.seller?.nickname,
-                attributes: item?.attributes,
-            }))
-        };
-        res.json(formattedResponse);
-    } catch (error) {
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-
-
-
-
-
-// Endpoint Find Product
-app.get('/api/product', async (req, res) => {
-    try {
-        const { id } = req.query;
-
-        const productResults = await searchProduct(id);
-
-        const formattedResponse = {
-            author: {
-                name: 'Jefrey',
-                lastname: 'Sánchez'
-            },
-            items: {
-                id: productResults?.id,
-                query: queryParams ? queryParams : '',
-                title: productResults?.title,
-                picture: productResults?.thumbnail,
-                price: {
-                    currency: productResults?.currency_id,
-                    amount: productResults?.price,
-                    decimals: getDecimalCount(productResults?.price)
-                },
-                condition: productResults?.condition,
-                free_shipping: productResults?.shipping && productResults?.shipping?.free_shipping,
-                sellerName: productResults?.seller && productResults?.seller?.nickname,
-                attributes: productResults?.attributes,
-            }
-        };
-        res.json(formattedResponse);
-
-    } catch (error) {
-        console.error('Error searching product:', error);
-        if (error.response) {
-            res.status(500).json({ error: 'Internal Server Error' });
-        } else {
-            res.status(400).json({ error: 'Bad Request' });
-        }
-    }
-});
-
-
 
 // RENDER PAGES
 
+
+
 //PAGE HOME
 app.get('/', async (req, res) => {
-
     const title = `Mercado libre`;
     const description = "Encontrá lo que buscás en Mercado Libre. Todo lo que necesitas lo conseguís en un solo lugar, en Mercado Libre"
-
     try {
         const root = (
             <html>
@@ -138,6 +58,30 @@ app.get('/items', async (req, res) => {
         const defaultSearchQuery = '';
         const query = req.query.search || defaultSearchQuery;
         const items = await searchItems(query);
+        queryParams = query
+
+
+        const formattedResponse = {
+            author: {
+                name: 'Jefrey',
+                lastname: 'Sánchez'
+            },
+            items: items.map(item => ({
+                id: item?.id,
+                query: query,
+                title: item?.title,
+                picture: item?.thumbnail,
+                price: {
+                    currency: item?.currency_id,
+                    amount: item?.price,
+                    decimals: getDecimalCount(item?.price)
+                },
+                condition: item?.condition,
+                free_shipping: item?.shipping && item?.shipping?.free_shipping,
+                sellerName: item?.seller && item?.seller?.nickname,
+                attributes: item?.attributes,
+            }))
+        };
 
 
         const title = `Mercado libre búsqueda de "${query}"`;
@@ -153,18 +97,17 @@ app.get('/items', async (req, res) => {
 
                 <body>
                     <div id="root">
-                        <Items item={items}/>
+                        <Items response={formattedResponse}/>
                     </div>
                     <script
                         dangerouslySetInnerHTML={{
-                            __html: `window.__data__ = ${JSON.stringify(items || null)};`,
+                            __html: `window.__data__ = ${JSON.stringify(formattedResponse || null)};`,
                         }}
                     />
-                    <script src="/static/bundle.js"></script>
+                    <script src="/static/bundle.js"/>
                 </body>
             </html>
         );
-
         const html = ReactDOM.renderToString(root);
         res.send(html);
     } catch (error) {
@@ -183,8 +126,31 @@ app.get('/detail/:id', async (req, res) => {
         const { id } = req.params;
         const product = await searchProduct(id);
 
-        const title = product?.title ? `Mercado libre te muestra el producto: "${product.title}"` : 'No hay nada';
-        const image = product?.thumbnail
+
+        const formattedResponse = {
+            author: {
+                name: 'Jefrey',
+                lastname: 'Sánchez'
+            },
+            items: {
+                id: product.id,
+                query: queryParams ? queryParams : '',
+                title: product?.title,
+                picture: product?.thumbnail,
+                price: {
+                    currency: product?.currency_id,
+                    amount: product?.price,
+                    decimals: getDecimalCount(product?.price)
+                },
+                condition: product?.condition,
+                free_shipping: product?.shipping && product?.shipping?.free_shipping,
+                sellerName: product?.seller && product?.seller?.nickname,
+                attributes: product?.attributes,
+            }
+        };
+
+        const title = formattedResponse?.items?.title ? `Mercado libre te muestra el producto: "${formattedResponse?.items?.title}"` : '';
+        const image = formattedResponse?.items?.picture
 
         const root = (
             <html>
@@ -197,11 +163,16 @@ app.get('/detail/:id', async (req, res) => {
             <meta property="og:image" content={image} />
 
             <body>
-            <div id="root">
-                <Detail/>
-            </div>
-            <script src="/static/bundle.js"></script>
-            </body>
+                <div id="root">
+                    <Detail response={formattedResponse}/>
+                </div>
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `window.__data__ = ${JSON.stringify(formattedResponse || null)};`,
+                    }}
+                />
+                <script src="/static/bundle.js"/>
+                </body>
             </html>
         );
 
@@ -222,18 +193,17 @@ app.get('*', (req, res) => {
         const description = "Encontrá lo que buscás en Mercado Libre. Todo lo que necesitas lo conseguís en un solo lugar, en Mercado Libre"
         const root = (
             <html>
-            <title>{title}</title>
-            <meta name="twitter:description" content={description} />
-            <meta property="og:description" content={description} />
-            <body>
-            <div id="root">
-                <NotFound />
-            </div>
-            <script src="/static/bundle.js"></script>
-            </body>
+                <title>{title}</title>
+                <meta name="twitter:description" content={description} />
+                <meta property="og:description" content={description} />
+                <body>
+                    <div id="root">
+                        <NotFound />
+                    </div>
+                    <script src="/static/bundle.js"/>
+                </body>
             </html>
         );
-
         const html = ReactDOM.renderToString(root);
         res.send(html);
     } catch (error) {
@@ -241,7 +211,6 @@ app.get('*', (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
-
 
 
 

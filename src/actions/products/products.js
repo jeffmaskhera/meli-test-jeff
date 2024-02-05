@@ -17,8 +17,7 @@ export const searchItems = async (query) => {
 export const searchProduct = async (productId) => {
     try {
         const response = await axios.get(`https://api.mercadolibre.com/items/${productId}`);
-        const product = response.data || {};
-        return product;
+        return response.data || {};
     } catch (error) {
         console.error('Error searching product:', error);
         throw error;
