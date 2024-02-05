@@ -100,7 +100,6 @@ app.get('/api/product', async (req, res) => {
 
 // RENDER PAGES
 
-
 //PAGE HOME
 app.get('/', async (req, res) => {
 

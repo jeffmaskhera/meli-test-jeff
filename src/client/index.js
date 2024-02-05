@@ -55,9 +55,3 @@ const componentToRender = switchCases(currentRoute, {
 });
 
 ReactDom.hydrate(componentToRender, document.getElementById('root'));
-
-
-
-/*
-const app = <Home items={window.__data__}/>
-ReactDom.hydrate(app, document.getElementById('root'));*/
