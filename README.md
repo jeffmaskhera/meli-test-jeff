@@ -1,8 +1,12 @@
 
 JEFREY SANCHEZ TEST MELI
+05/feb/2024 
 
 node v14.17.0
 
+Install project
+
+### `npm install`
 
 In the project directory, for build you can run:
 

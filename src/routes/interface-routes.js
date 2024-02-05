@@ -2,6 +2,6 @@
 export const Routes = {
     HOME: '/',
     ITEMS: '/items',
-    DETAIL: '/detail/',
+    DETAIL: '/items/',
     NOTFOUND: '*'
 };

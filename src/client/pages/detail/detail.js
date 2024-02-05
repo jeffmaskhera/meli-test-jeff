@@ -22,7 +22,8 @@ const Detail = ({response}) => {
     }, [response])
 
     const actionBuild=()=> {
-        console.log("comprar")
+        console.log("Action build")
+        console.log("Send product", product)
     }
 
 

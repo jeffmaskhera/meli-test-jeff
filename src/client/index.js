@@ -43,7 +43,7 @@ const componentToRender = switchCases(currentRoute, {
     [Routes.HOME]: <Home items={window.__data__} />,
     [Routes.ITEMS]: <Items response={window.__data__}/>,
     [Routes.DETAIL + detailId]: <Detail response={window.__data__}/>,
-    'default': <NotFound/> // Página no encontrada
+    [Routes.NOTFOUND]: <NotFound/> // Page not found
 });
 
 

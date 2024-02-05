@@ -12,7 +12,6 @@ export const renderItems = async (req, res, next)=> {
         const query = req.query.search || defaultSearchQuery;
         const items = await searchItems(query);
 
-
         const formattedResponse = {
             author: {
                 name: 'Jefrey',
@@ -41,23 +40,22 @@ export const renderItems = async (req, res, next)=> {
 
         const root = (
             <html>
-            <title>{title}</title>
-            <meta name="twitter:title" content={title} />
-            <meta name="twitter:description" content={title} />
-            <meta property="og:title" content={title} />
-            <meta property="og:description" content={titlesArray} />
-
-            <body>
-            <div id="root">
-                <Items response={formattedResponse}/>
-            </div>
-            <script
-                dangerouslySetInnerHTML={{
-                    __html: `window.__data__ = ${JSON.stringify(formattedResponse || null)};`,
-                }}
-            />
-            <script src="/static/bundle.js"/>
-            </body>
+                <title>{title}</title>
+                <meta name="twitter:title" content={title} />
+                <meta name="twitter:description" content={title} />
+                <meta property="og:title" content={title} />
+                <meta property="og:description" content={titlesArray} />
+                    <body>
+                        <div id="root">
+                            <Items response={formattedResponse}/>
+                        </div>
+                        <script
+                            dangerouslySetInnerHTML={{
+                                __html: `window.__data__ = ${JSON.stringify(formattedResponse || null)};`,
+                            }}
+                        />
+                        <script src="/static/bundle.js"/>
+                    </body>
             </html>
         );
         const html = ReactDOM.renderToString(root);
