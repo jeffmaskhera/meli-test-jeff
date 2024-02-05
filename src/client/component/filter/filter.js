@@ -24,10 +24,14 @@ const Filter=()=> {
         window.location.href = (`/items?search=${input}`)
     }
 
+    const redirectHome =()=> {
+        window.location.href = (`/`)
+    }
+
     return (
         <div className="hero-filter">
             <div className="filter">
-                <div className="filter__box-img">
+                <div className="filter__box-img" onClick={redirectHome}>
                     <img src="https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/6.6.15/mercadolibre/logo_large_plus@2x.webp" alt="mercado libre" />
                 </div>
                 <input

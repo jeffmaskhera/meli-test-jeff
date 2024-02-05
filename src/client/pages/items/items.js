@@ -11,7 +11,7 @@ const Items = ({params}) => {
     const [products, setProducts] = useState([]);
     const [breadCrumb, setBreadCrumb] =useState([])
     const [loading, setLoading] = useState(false);
-
+    const [searchCompleted, setSearchCompleted] = useState(false);
 
     const loadBreadCrumb =(products)=> {
         const transformedArray = products.map(item => {
@@ -39,9 +39,15 @@ const Items = ({params}) => {
             setProducts(items.map(formatProductData));
             loadBreadCrumb(items.map(formatProductData))
             setLoading(false)
+            if (items.length === 0) {
+                setSearchCompleted(true)
+            } else {
+                setSearchCompleted(false)
+            }
         } catch (error) {
             console.error('Error fetching data:', error);
             setLoading(false)
+            setSearchCompleted(true)
         }
     };
 
@@ -58,28 +64,27 @@ const Items = ({params}) => {
 
     return (
         <div className="items">
-            {
+      {/*      {
                 loading && <Spinner />
-            }
+            }*/}
             <Filter searching={searching}/>
             {breadCrumb &&
                 breadCrumb.length > 0 && <BreadCrumb product={breadCrumb}/>
             }
             <div>
-                {products
-                && products.length > 0 ?
+                {products && products.length > 0 ?
                     <SearchResult products={products} selectorIdProduct={selectorIdProduct}/>
                     :
                    <>
-                       {
-                           products  && !loading &&
+                       {searchCompleted && !loading && (
                            <div className="items__not-found">
                                <h2>No se encontraron productos, por favor intenta de nuevo</h2>
                            </div>
-                       }
+                       )}
                    </>
                 }
             </div>
+
         </div>
     );
 };
