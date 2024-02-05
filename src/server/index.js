@@ -7,6 +7,7 @@ import Items from "../client/pages/items/items";
 import Detail from "../client/pages/detail/detail";
 import {getDecimalCount} from "../utils/helpers";
 import {searchItems, searchProduct} from "../actions/products/products";
+import NotFound from "../client/pages/not-found/notFound";
 
 
 
@@ -209,6 +210,35 @@ app.get('/detail/:id', async (req, res) => {
         res.send(html);
     } catch (error) {
         console.error('Error handling /items request:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+
+// NOT FOUND
+app.get('*', (req, res) => {
+    try {
+        const title = 'Mercado libre - Página no encontrada';
+        const description = "Encontrá lo que buscás en Mercado Libre. Todo lo que necesitas lo conseguís en un solo lugar, en Mercado Libre"
+        const root = (
+            <html>
+            <title>{title}</title>
+            <meta name="twitter:description" content={description} />
+            <meta property="og:description" content={description} />
+            <body>
+            <div id="root">
+                <NotFound />
+            </div>
+            <script src="/static/bundle.js"></script>
+            </body>
+            </html>
+        );
+
+        const html = ReactDOM.renderToString(root);
+        res.send(html);
+    } catch (error) {
+        console.error('Error handling default request:', error);
         res.status(500).send('Internal Server Error');
     }
 });

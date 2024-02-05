@@ -5,6 +5,7 @@ import Home from './pages/home/home'
 import Items from "./pages/items/items";
 import Detail from "./pages/detail/detail";
 import {switchCases} from "../utils/helpers";
+import NotFound from "./pages/not-found/notFound";
 
 
 const linkElement = document.createElement('link');
@@ -50,7 +51,7 @@ const componentToRender = switchCases(currentRoute, {
     [Routes.HOME]: <Home items={window.__data__} />,
     [Routes.ITEMS]: <Items params={searchParam}/>,
     [Routes.DETAIL + detailId]: <Detail detailId={detailId}/>,
-    'default': <div>no encontrado</div>, // Página no encontrada
+    'default': <NotFound/> // Página no encontrada
 });
 
 ReactDom.hydrate(componentToRender, document.getElementById('root'));
