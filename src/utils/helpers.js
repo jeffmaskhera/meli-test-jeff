@@ -6,7 +6,7 @@ export function switchCases(expression, cases) {
 export function formatNumberPrice(number) {
 
     if (typeof number !== 'number' || number < 0) {
-        console.log('El valor es negativo');
+
         return '';
     }
 
@@ -18,8 +18,7 @@ export function formatNumberPrice(number) {
 
     const formattedDecimal = decimalPart.replace(/0+$/, '');
 
-    const formattedNumber = formattedDecimal.length > 0 ? `${integerPart},${formattedDecimal}` : integerPart;
-    return formattedNumber;
+    return formattedDecimal.length > 0 ? `${integerPart},${formattedDecimal}` : integerPart;
 }
 
 

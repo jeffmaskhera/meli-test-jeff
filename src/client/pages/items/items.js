@@ -64,9 +64,9 @@ const Items = ({params}) => {
 
     return (
         <div className="items">
-      {/*      {
+            {
                 loading && <Spinner />
-            }*/}
+            }
             <Filter searching={searching}/>
             {breadCrumb &&
                 breadCrumb.length > 0 && <BreadCrumb product={breadCrumb}/>

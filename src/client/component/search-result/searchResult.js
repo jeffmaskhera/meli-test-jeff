@@ -1,4 +1,5 @@
 import React from 'react';
+import {formatNumberPrice} from "../../../utils/helpers";
 
 
 
@@ -19,7 +20,7 @@ const SearchResult=({products, selectorIdProduct})=> {
                                     <img src={item.image} alt={item.title} />
                                 </div>
                                 <div className="search-result__container__item__left-side__grid-info">
-                                    <h2>{item.price}</h2>
+                                    <h2>{formatNumberPrice(item.price)}</h2>
                                     <h2>{item.title}</h2>
                                 </div>
                             </div>
