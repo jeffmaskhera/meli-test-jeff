@@ -43,7 +43,7 @@ const Filter=()=> {
                     className="filter__send-button"
                     onClick={searching}
                 >
-                    <i className="fas fa-search"></i>
+                    <i className="fas fa-search" />
                 </button>
             </div>
         </div>
