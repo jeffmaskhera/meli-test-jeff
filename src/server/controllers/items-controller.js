@@ -62,7 +62,6 @@ export const renderItems = async (req, res, next)=> {
         );
         const html = ReactDOM.renderToString(root);
         res.locals.params = query
-       /* return res.send(html);*/
         next();
         return res.send(html)
     } catch (error) {
