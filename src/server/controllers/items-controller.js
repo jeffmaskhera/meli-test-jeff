@@ -11,7 +11,6 @@ export const renderItems = async (req, res, next)=> {
         const defaultSearchQuery = '';
         const query = req.query.search || defaultSearchQuery;
         const items = await searchItems(query);
-        const queryParams = query
 
 
         const formattedResponse = {
