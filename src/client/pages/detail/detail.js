@@ -25,6 +25,7 @@ const Detail = ({response}) => {
         console.log("comprar")
     }
 
+
     return (
         <div className="detail">
             <Filter/>
@@ -45,7 +46,7 @@ const Detail = ({response}) => {
                                 <div className="detail__main__container__grid__grid-product__info-top">
                                     <p>{product.condition} - {product.quantitySold} vendidos</p>
                                     <h2>{product.title}</h2>
-                                    <h2>$ {formatNumberPrice(product?.price)}</h2>
+                                    <h2>$ {formatNumberPrice(product?.price?.amount)}</h2>
                                     <button className="button" onClick={actionBuild}>
                                         Comprar
                                     </button>
